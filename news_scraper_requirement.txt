@@ -1,0 +1,99 @@
+
+==============================
+     News Aggregator Project
+==============================
+
+Objective:
+----------
+Create a Python web scraper that collects news articles from multiple websites,
+extracts key information, and performs basic sentiment analysis.
+
+Requirements:
+-------------
+1. Sources:
+   - Scrape at least 3 different news websites (e.g., BBC, CNN, TechCrunch).
+   - Handle different HTML structures per site.
+
+2. Data Extraction:
+   For each article, capture:
+   - Headline/Title
+   - Author (if available)
+   - Publication date
+   - Summary or first 200 words
+   - URL
+
+3. Filtering:
+   - Only scrape articles from the last 7 days.
+   - Allow filtering by keywords (e.g., "AI", "Space", "Economy").
+
+4. Data Storage:
+   - Save data in both CSV and JSON formats.
+
+5. Sentiment Analysis:
+   - Analyze headline/summary to classify sentiment as Positive, Negative, or Neutral.
+   - Use TextBlob, NLTK, or any other Python library.
+
+6. Automation & Scheduling:
+   - Script should be able to run daily and append new articles to existing files.
+
+7. Optional Extras:
+   - Generate daily report: top 5 positive & negative headlines.
+   - Provide a simple plot showing sentiment trends over time.
+
+Console Output Expectations:
+----------------------------
+- Show progress per source, e.g., "[✓] BBC: 12 articles found"
+- Display total articles processed
+- Show sentiment distribution: Positive | Neutral | Negative
+- Provide a summary report of top headlines
+- Optional: color coding for sentiment (green/positive, red/negative, yellow/neutral)
+
+Skill Level:
+------------
+Intermediate Python, web scraping, data processing, and basic sentiment analysis.
+
+Notes:
+------
+- Start with one website first if needed, then expand to multiple sources.
+- Focus on clean console output and well-structured saved files.
+
+
+
+
+
+Desired Output:
+=============================================
+        📰 Daily News Scraper v1.0
+=============================================
+
+Sources Selected: BBC, CNN, TechCrunch
+Keyword Filter: AI, Space
+Fetching articles from the last 7 days...
+
+[✓] BBC: 12 articles found
+[✓] CNN: 15 articles found
+[✓] TechCrunch: 8 articles found
+
+Analyzing sentiments...
+[✓] Sentiment analysis complete
+
+Saving data to files:
+- news_data.csv
+- news_data.json
+
+Summary Report:
+---------------------------------------------
+Top Positive Headlines:
+1. "AI Breakthrough Promises Faster Medical Diagnoses"
+2. "SpaceX Launches New Satellite to Monitor Climate"
+...
+Top Negative Headlines:
+1. "Economic Downturn Hits Tech Startups Hard"
+2. "AI Bias in Recruitment Sparks Controversy"
+...
+
+Total Articles Processed: 35
+Sentiment Distribution: Positive: 40% | Neutral: 45% | Negative: 15%
+
+✅ All done! See the saved files for details.
+=============================================
