@@ -1,7 +1,7 @@
 import requests
 from datetime import date,timedelta,datetime
 from bs4 import BeautifulSoup
-from zoneinfo import ZoneInfo
+# from zoneinfo import ZoneInfo
 
 # bbc 
 count=1
