@@ -2,7 +2,7 @@ import requests
 from datetime import date,timedelta,datetime
 from bs4 import BeautifulSoup
 
-
+# BBC 
 def bbc_scraper():
     count=1
     bbc_news_info=[]
@@ -37,7 +37,9 @@ def bbc_scraper():
                         "description":description.text
                     }
                     bbc_news_info.append(news_section)
-
+        else:
+             print("Error occured")
+             break
         count+=9
     match=0
     for info in bbc_news_info:
