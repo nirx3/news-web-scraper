@@ -28,8 +28,9 @@ def bbc_scraper():
                         actual_date=date_.text 
                     except ValueError:
                         days_ago=int(''.join(filter(str.isdigit,date_.text)))
-                        that_date = datetime.now() - timedelta(days=days_ago)
-                        actual_date=that_date.strftime("%d %b %Y")
+                        if "days" or "day" in date_.text.split(" "):
+                            that_date = datetime.now() - timedelta(days=days_ago)
+                            actual_date=that_date.strftime("%d %b %Y")
                     news_section={
                         "No":index,
                         "date": actual_date ,
