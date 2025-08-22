@@ -1,5 +1,5 @@
 import requests
-from datetime import date,timedelta,datetime
+from datetime import timedelta,datetime,timezone
 from bs4 import BeautifulSoup
 
 # BBC 
@@ -33,9 +33,9 @@ def bbc_scraper():
                             actual_date=that_date.strftime("%d %b %Y")
                     news_section={
                         "No":index,
-                        "date": actual_date ,
-                        "title":title.text,
-                        "description":description.text
+                        "Date": actual_date ,
+                        "Title":title.text,
+                        "Description":description.text
                     }
                     bbc_news_info.append(news_section)
         else:
@@ -44,13 +44,57 @@ def bbc_scraper():
         count+=9
     match=0
     for info in bbc_news_info:
-        if (datetime.now()-datetime.strptime(info["date"],"%d %b %Y")).days <= 7:
+        if (datetime.now()-datetime.strptime(info["Date"],"%d %b %Y")).days <= 7:
             match+=1
         
     print(f"[✓] BBC: {match} articles found")
 
+#techcrunch
+def techcrunch_scraper():
+    techcrunch_info=[]
+    count = 1
+    for pg_no in range(1,4,1):
+        base_url=f"https://techcrunch.com/page/{pg_no}/"
+        params={
+            "s": ask_category,
+        }
+        headers={
+            "User-Agent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Safari/537.36"
+        }
+        response=requests.get(base_url,params=params,headers=headers)
+        if response.status_code == 200:
+            soup=BeautifulSoup(response.text,"html.parser")
+            titles=soup.find_all("h3", class_="loop-card__title")
+            dates=soup.find_all("time" , class_="loop-card__meta-item loop-card__time wp-block-tc23-post-time-ago") 
+            for no,title,date_ in zip(list(range(count ,count+30,1)),titles,dates):
+                news_section={
+                    "No": no,
+                    "Title" : title.text,
+                    "Date" : date_.get("datetime")
+                }
+                techcrunch_info.append(news_section)
+        else:
+            print("error")
+            break
+        count+=30
 
-print("Selected Source:BBC")
+    match=0
+    for info in techcrunch_info:
+        current_date = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        _current_date=datetime.strptime(current_date,"%Y-%m-%d %H:%M:%S")
+        proper_timezone=timezone(timedelta(hours=5,minutes=45))
+        published_date=datetime.fromisoformat(info["Date"])
+        _published_date=(published_date.astimezone(proper_timezone)).strftime("%Y-%m-%d %H:%M:%S")
+        if (_current_date - datetime.strptime(_published_date,"%Y-%m-%d %H:%M:%S")).days <=7:
+            match+=1
+     
+    print(f"[✓] Techcrunch: {match} articles found")
+
+
+
+#main function
+print("Selected Source:BBC, Techcrunch")
 ask_category=input("Keyword filter: ").strip().capitalize()
 print("Fetching articles for last 7 days....")
 bbc_scraper()
+techcrunch_scraper()
